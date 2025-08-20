@@ -7,10 +7,10 @@
     <meta name="theme-color" content="#F9F9F7">
     <title>Saveurs Suprême - Menu</title>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts (trimmed to 2 families: brand serif + sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@500;600;700&family=Source+Sans+3:wght@400;500&family=Merriweather:wght@300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* CSS Reset & Base */
@@ -23,6 +23,7 @@
         /* Design Tokens */
         :root {
             /* Colors - Neutral Restaurant Palette */
+            /* Restore subtle warm background for readability */
             --bg-primary: #F9F9F7;
             --bg-secondary: #FFFFFF;
             --bg-footer: #F5F5F3;
@@ -90,160 +91,129 @@
             padding: 0 var(--space-md);
         }
 
-        /* Header Styles - Compact */
+        /* Header Redesign */
         header {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-light);
-            padding: var(--space-md) 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            background: var(--bg-primary); /* unified with body */
+            border-bottom: none;
+            padding: clamp(12px, 2vw, 32px) 0;
         }
-
-        .header-top {
+        .site-header {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-sm);
-            gap: var(--space-lg);
+            gap: clamp(16px, 3vw, 64px);
         }
-
-        .header-left {
+        .site-header > .pillar {
+            flex: 1;
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
-            flex: 1;
+            gap: clamp(12px, 1.2vw, 20px);
+            min-width: 0;
         }
-
-        .header-center {
-            text-align: center;
+    .pillar--left { justify-content: flex-start; margin-top: 8px; }
+        .pillar--right { justify-content: flex-end; }
+        .pillar-icon {
             flex: 0 0 auto;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            flex: 1;
-            justify-content: flex-end;
-        }
-
-        .icon-text {
-            display: flex;
-            align-items: center;
-            gap: var(--space-xs);
-            font-size: 0.8125rem;
-            color: var(--text-secondary);
-        }
-
-        .icon-wrapper {
-            width: 20px;
-            height: 20px;
+            width: clamp(48px, 7vw, 64px);
+            height: clamp(48px, 7vw, 64px);
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        .icon-wrapper img {
+        .pillar-icon img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: saturate(0) brightness(0.15) sepia(1) hue-rotate(-10deg) saturate(400%) contrast(0.9);
         }
+    /* Pillar Text Blocks */
+    .pillar-text { display:flex; flex-direction:column; gap:2px; line-height:1.05; }
+    .pillar-text .line { margin:0; padding:0; }
+    /* Unified pillar blocks (responsive transforms) */
+    .pillar-block { display:flex; align-items:center; gap:16px; }
+    .pillar-block.hours { justify-content:flex-start; }
+    .pillar-block.reservation { justify-content:flex-end; }
+    .pillar-block .text-lines { display:flex; flex-direction:column; gap:2px; line-height:1.05; }
+    .row-primary { display:flex; align-items:center; gap:10px; }
+    .row-primary .line-smallcaps { margin:0; }
+    .row-primary .line-script { margin:0; }
+    .line-subtime { font-family: var(--font-body); font-size:0.72rem; font-weight:500; color:var(--text-secondary); letter-spacing:0.3px; }
+    a.line-subtime.phone-link { font-weight:500; text-decoration:none; display:inline-block; }
+    a.line-subtime.phone-link:hover { color: var(--accent-burgundy); }
+    .hours-main { display:flex; flex-direction:column; align-items:flex-start; gap:2px; }
+    .reservation-main { display:flex; flex-direction:column; align-items:flex-start; gap:2px; }
+    .reservation-main .contacts.inline { margin-top:2px; }
+    .contacts { display:flex; flex-direction:column; gap:2px; font-family: var(--font-body); }
+    .contacts a { color: var(--text-primary); text-decoration:none; font-weight:600; font-size:0.8rem; }
+    .contacts a:hover { color: var(--accent-burgundy); text-decoration:underline; }
+    .contacts a.email { font-weight:500; }
 
-        .restaurant-branding {
+    .line-smallcaps { font-family: var(--font-body); font-size: clamp(0.55rem, 0.75vw, 0.7rem); letter-spacing:1.6px; text-transform:uppercase; font-weight:600; color: var(--text-primary); }
+    /* Fine-tune smallcaps in pillars to avoid wrapping and reduce visual weight */
+    .pillar-block.hours .line-smallcaps,
+    .pillar-block.reservation .line-smallcaps { font-size: clamp(0.48rem, 0.62vw, 0.58rem); letter-spacing:1.4px; white-space:nowrap; }
+    /* Give slightly more horizontal space to reservation side to keep MAKE A on one line */
+    .pillar--left { flex:0.85; }
+    .pillar--right { flex:1.15; }
+    .line-script { font-family: 'Playfair Display', serif; font-style: italic; font-weight:700; font-size: clamp(1.15rem, 2.4vw, 1.9rem); letter-spacing:0.5px; color: var(--text-primary); }
+    .line-sub { font-family: var(--font-body); font-size: clamp(0.55rem, 0.8vw, 0.75rem); font-weight:500; color: var(--text-secondary); text-transform:lowercase; }
+    .line-time { font-family: var(--font-body); font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight:600; color: var(--text-primary); letter-spacing:0.5px; }
+    .line-contact { font-family: var(--font-body); font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight:600; color: var(--text-primary); text-decoration:none; }
+    .line-contact.email { font-weight:500; letter-spacing:0.2px; }
+    .line-contact:hover { color: var(--accent-burgundy); text-decoration:underline; }
+    .block--reservation { text-align:right; align-items:flex-end; }
+    .block--hours { text-align:left; }
+    .branding {
+            flex: 0 1 auto;
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: var(--space-xs);
+            gap: 6px;
+            padding: 0 clamp(4px, 1vw, 12px);
         }
-
-        .logo {
-            width: 36px;
-            height: 36px;
+    .branding-top { display: flex; align-items: center; gap: 12px; }
+        .branding-logo {
+            width: clamp(56px, 8vw, 84px);
+            height: clamp(56px, 8vw, 84px);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: var(--space-xs);
         }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .restaurant-name {
+        .branding-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .branding-name { font-family: var(--font-brand); font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 600; letter-spacing: -0.5px; line-height:1; color: var(--text-primary); white-space: nowrap; }
+    .branding-menu-title { font-family: var(--font-brand); font-size: clamp(2rem, 5vw, 3.25rem); font-weight:700; letter-spacing: 2px; line-height:1; color: var(--text-primary); text-transform: uppercase; }
+        .branding-tagline {
             font-family: var(--font-brand);
-            font-size: clamp(1.25rem, 3vw, 1.75rem);
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-            line-height: 1;
-        }
-
-        .restaurant-tagline {
-            font-family: var(--font-brand);
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary); /* lighter so MENU anchors */
             font-style: italic;
-            font-size: 0.75rem;
-            color: var(--accent-burgundy);
-            letter-spacing: 0.5px;
+            line-height: 1.2;
         }
+    /* Navigation (restored) */
+    nav.menu-nav { background: var(--bg-primary); border-bottom: none; position: sticky; top: 0; z-index: 50; display:flex; align-items:center; }
+    .menu-nav-inner { position:relative; max-width: var(--max-width); margin: 0 auto; padding: 6px var(--space-md); display: flex; justify-content: flex-start; gap: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-snap-type: x proximity; scroll-behavior:smooth; }
+    .menu-nav-inner::-webkit-scrollbar { display: none; }
+    /* Flat edge scroll buttons */
+    .nav-scroll-btn { position:absolute; top:0; bottom:0; width:34px; padding:0; background:var(--bg-primary); border:none; border-radius:0; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text-secondary); transition: color var(--transition-base), opacity var(--transition-base); box-shadow:none; }
+    .nav-scroll-btn svg { stroke-width:1.5; }
+    .nav-scroll-btn.nav-left { left:0; background:linear-gradient(to right, var(--bg-primary) 70%, rgba(249,249,247,0)); }
+    .nav-scroll-btn.nav-right { right:0; background:linear-gradient(to left, var(--bg-primary) 70%, rgba(249,249,247,0)); }
+    .nav-scroll-btn:hover { color: var(--accent-burgundy); }
+    .nav-scroll-btn.hidden { opacity:0; pointer-events:none; }
+    @media (min-width: 900px){ .nav-scroll-btn { display:none; } }
+    .menu-link { position:relative; font-family: var(--font-body); font-weight:600; font-size: 0.65rem; letter-spacing:1px; text-transform: uppercase; color: var(--text-secondary); text-decoration:none; padding: 10px 18px 14px; border-radius: 24px; transition: color var(--transition-base), background var(--transition-base); white-space: nowrap; scroll-snap-align:center; }
+    .menu-link::after { content:""; position:absolute; left:50%; bottom:4px; width:0; height:2px; background: var(--accent-burgundy); border-radius:2px; transition: width var(--transition-base), left var(--transition-base); }
+    .menu-link:hover, .menu-link:focus { color: var(--accent-burgundy); }
+    .menu-link:hover::after, .menu-link:focus::after { width:60%; left:20%; }
+    .menu-link.active { color: var(--accent-burgundy); font-weight:700; }
+    .menu-link.active::after { width:60%; left:20%; }
+    @media (min-width:600px){ .menu-link { font-size: 0.7rem; } }
+    @media (min-width:900px){ .menu-link { font-size: 0.72rem; } }
 
-        .contact-link {
-            color: var(--accent-burgundy);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .contact-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Navigation - Compact */
-        nav {
-            background: var(--bg-accent);
-            padding: var(--space-sm) 0;
-            border-bottom: 1px solid var(--border-light);
-            position: sticky;
-            top: 60px;
-            z-index: 90;
-        }
-
-        .nav-items {
-            display: flex;
-            justify-content: center;
-            gap: var(--space-xs);
-            overflow-x: auto;
-            padding: var(--space-xs) 0;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .nav-items::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-link {
-            font-family: var(--font-headers);
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: var(--space-xs) var(--space-md);
-            border-radius: 20px;
-            transition: all var(--transition-base);
-            white-space: nowrap;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--accent-burgundy);
-        }
-
-        /* Main Content */
+    /* Main Content */
         main {
             padding: var(--space-xl) 0;
             min-height: 60vh;
@@ -334,56 +304,38 @@
             font-weight: 500;
         }
 
-        /* Footer - Flat and Horizontal */
-        footer {
-            background: var(--bg-footer);
-            border-top: 1px solid var(--border-light);
-            padding: var(--space-lg) 0;
-            margin-top: var(--space-2xl);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: var(--space-lg);
-        }
-
-        .footer-section {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-        }
-
-        .footer-section h3 {
-            font-family: var(--font-headers);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-primary);
-            margin-bottom: var(--space-xs);
-        }
-
-        .footer-section p,
-        .footer-section a {
-            font-family: var(--font-body);
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            line-height: 1.4;
-        }
-
-        .footer-section a:hover {
-            color: var(--accent-burgundy);
-        }
-
-        .footer-divider {
-            width: 1px;
-            height: 40px;
-            background: var(--border-light);
-        }
+    /* Footer - Refined Compact */
+    footer { background: var(--bg-footer); border-top: 1px solid var(--border-light); margin-top: var(--space-2xl); }
+    .footer-inner { max-width: var(--max-width); margin:0 auto; padding: var(--space-xl) var(--space-md) var(--space-md); display:flex; flex-direction:column; gap: var(--space-lg); }
+    .footer-main { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-lg); align-items:start; }
+    .footer-brand { display:flex; flex-direction:column; align-items:flex-start; gap:10px; }
+    .footer-logo { width:58px; height:58px; display:flex; align-items:center; justify-content:center; }
+    .footer-logo img { width:100%; height:100%; object-fit:contain; }
+    .footer-name { font-family: var(--font-brand); font-size:1rem; font-weight:600; letter-spacing:0.5px; color:var(--text-primary); }
+    .footer-tagline { font-family: var(--font-brand); font-style:italic; font-size:0.65rem; color:var(--text-secondary); letter-spacing:0.4px; }
+    .footer-col { display:flex; flex-direction:column; gap:6px; }
+    .footer-col-title { font-family: var(--font-body); font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; color:var(--text-primary); }
+    .footer-line { font-family: var(--font-body); font-size:0.7rem; color:var(--text-secondary); line-height:1.3; }
+    .footer-link { font-family: var(--font-body); font-size:0.7rem; color:var(--text-secondary); text-decoration:none; position:relative; transition:color var(--transition-base); }
+    .footer-link:hover { color:var(--accent-burgundy); }
+    .footer-bottom { display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; padding-top: var(--space-sm); border-top:1px solid var(--border-light); }
+    .footer-copy { font-family: var(--font-body); font-size:0.6rem; color:var(--text-muted); letter-spacing:0.4px; }
+    .footer-meta { display:flex; gap:16px; flex-wrap:wrap; }
+            .footer-meta a { font-size:0.6rem; color:var(--text-secondary); text-decoration:none; letter-spacing:0.4px; }
+    .footer-meta a:hover { color:var(--accent-burgundy); }
+            @media (max-width:680px){
+                .footer-inner { padding: var(--space-lg) var(--space-md) var(--space-sm); gap: var(--space-lg); }
+                .footer-main { gap: var(--space-md); grid-template-columns: repeat(2, minmax(140px,1fr)); }
+                .footer-brand { align-items:center; text-align:center; padding-bottom:4px; }
+                .footer-brand .footer-name { font-size:0.9rem; }
+                .footer-brand .footer-tagline { font-size:0.55rem; }
+                .footer-col { text-align:center; gap:4px; }
+                .footer-col-title { font-size:0.55rem; }
+                .footer-line, .footer-link { font-size:0.62rem; }
+                .footer-bottom { flex-direction:column; gap:6px; padding-top:8px; }
+                .footer-meta { justify-content:center; gap:12px; }
+                .footer-meta a { font-size:0.58rem; }
+            }
 
         /* Scroll to Top Button */
         .scroll-to-top {
@@ -423,47 +375,56 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .header-top {
-                flex-direction: column;
-                gap: var(--space-md);
-            }
-
-            .header-left,
-            .header-right {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .icon-text {
-                font-size: 0.75rem;
-            }
-
             .section-header::before,
             .section-header::after {
                 width: 20px;
                 left: calc(50% - 80px);
                 right: calc(50% - 80px);
             }
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-divider { display: none; }
+            .scroll-to-top { bottom: var(--space-md); right: var(--space-md); width: 40px; height: 40px; }
+        }
+        /* Mobile stacking for header */
+        @media (max-width: 680px) {
+            /* Compact grid: pillars top corners, branding centered below */
+            .site-header { display:grid; grid-template-columns:1fr 1fr; grid-template-areas: "left right" "branding branding"; align-items:start; column-gap:12px; row-gap:12px; }
+            .pillar--left { grid-area:left; justify-content:flex-start; }
+            .pillar--right { grid-area:right; justify-content:flex-end; }
+            .branding { grid-area:branding; margin-top:4px; }
+            .pillar-block { flex-direction:column; gap:10px; }
+            /* Hours block centered vertical */
+            .pillar-block.hours { justify-content:center; align-items:center; text-align:center; }
+            .pillar-block.hours .row-primary { flex-direction:column; align-items:center; gap:4px; }
+            .pillar-block.hours .hours-main { align-items:center; }
+            .pillar-block.hours .line-subtime { font-size:0.6rem; }
+            /* Reservation fully centered */
+            .pillar-block.reservation { justify-content:center; align-items:center; text-align:center; }
+            .pillar-block.reservation .row-primary { flex-direction:column; align-items:center; gap:4px; }
+            .pillar-block.reservation .row-primary .pillar-icon { order:-1; }
+            .reservation-main { align-items:center; }
+            .pillar-block.reservation .contacts { gap:4px; }
+            .pillar-block.reservation .contacts a { font-size:0.75rem; }
+            .pillar-block.reservation .contacts a.email { font-weight:500; opacity:0.85; }
+            .pillar-icon { width:52px; height:52px; }
+            .line-script { font-size:1.55rem; }
+            .line-smallcaps { font-size:0.6rem; }
+            .line-subtime { font-size:0.7rem; }
+            .contacts a { font-size:0.75rem; }
+            .branding-logo { width:70px !important; height:70px !important; }
+            .branding-top { padding:4px 0 6px; }
+            .branding-menu-title { font-size:2rem; letter-spacing:1px; }
+            .branding-name { font-size:1.1rem; }
+            nav.menu-nav { top:0; }
+            .menu-nav-inner { justify-content:flex-start; }
+        }
 
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-divider {
-                display: none;
-            }
-
-            .scroll-to-top {
-                bottom: var(--space-md);
-                right: var(--space-md);
-                width: 40px;
-                height: 40px;
-            }
-
-            nav {
-                top: 120px;
-            }
+        @media (max-width: 420px) {
+            .branding-menu-title { font-size: 1.7rem; }
+            .line-script { font-size: 1.15rem; }
+            .pillar-icon { width: 40px; height: 40px; }
+            .pillar-block.reservation .row-primary .pillar-icon { width:46px; height:46px; }
+            .pillar-block.reservation .row-primary { gap:6px; }
         }
 
         @media (min-width: 1024px) {
@@ -506,52 +467,67 @@
     </style>
 </head>
 <body>
-    <!-- Header - Compact Design -->
+    <!-- Header with Branding INLINE (Logo + Name) and MENU title -->
     <header>
         <div class="container">
-            <div class="header-top">
-                <div class="header-left">
-                    <div class="icon-wrapper">
-                        <img src="/icons/food-serving.png" alt="Food" onerror="this.style.display='none'">
-                    </div>
-                    <div class="icon-text">
-                        <span>Ouvert tous les jours • 12:30 - 23:30</span>
-                    </div>
-                </div>
-                
-                <div class="header-center">
-                    <div class="restaurant-branding">
-                        <h1 class="restaurant-name">Saveurs Suprême</h1>
-                        <div class="logo">
-                            <img src="/icons/logo.png" alt="Logo" onerror="this.style.display='none'">
+            <div class="site-header">
+                <!-- Left Pillar: Unified Hours Block -->
+                <div class="pillar pillar--left">
+                    <div class="pillar-block hours">
+                        <div class="row-primary">
+                            <div class="pillar-icon"><img src="/icons/food-serving.png" alt="Serving dish icon"></div>
+                            <p class="line line-smallcaps">WE ARE</p>
+                            <div class="hours-main">
+                                <p class="line line-script">Open</p>
+                                <p class="line-subtime">everyday 12:30 - 23:30</p>
+                            </div>
                         </div>
-                        <p class="restaurant-tagline">Une expérience culinaire authentique</p>
                     </div>
                 </div>
-                
-                <div class="header-right">
-                    <div class="icon-text">
-                        <span>Réservation: <a href="tel:+32467620981" class="contact-link">+32 467 620 981</a></span>
+                <!-- Center Branding -->
+                <div class="branding">
+                    <div class="branding-top">
+                        <div class="branding-logo">
+                            <img src="/icons/logo.png" alt="Saveurs Suprême logo">
+                        </div>
                     </div>
-                    <div class="icon-wrapper">
-                        <img src="/icons/wine.png" alt="Wine" onerror="this.style.display='none'">
+                    <h1 class="branding-menu-title">Menu</h1>
+                    <p class="branding-tagline">Une expérience culinaire authentique</p>
+                </div>
+                <!-- Right Pillar: Unified Reservation Block -->
+                <div class="pillar pillar--right">
+                    <div class="pillar-block reservation">
+                        <div class="row-primary">
+                            <p class="line line-smallcaps">MAKE A</p>
+                            <div class="reservation-main">
+                                <p class="line line-script">Reservation</p>
+                                <div class="contacts inline">
+                                    <a href="tel:+32467620981" class="line-subtime phone-link">+32467620981</a>
+                                </div>
+                            </div>
+                            <div class="pillar-icon"><img src="/icons/wine.png" alt="Wine glass icon"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <div class="nav-items">
-                <a href="#plats" class="nav-link">Plats Principaux</a>
-                <a href="#accompagnements" class="nav-link">Accompagnements</a>
-                <a href="#legumes" class="nav-link">Légumes</a>
-                <a href="#boissons" class="nav-link">Boissons</a>
-                <a href="#alcool" class="nav-link">Vins & Alcools</a>
-            </div>
+    <!-- Navigation (restored) -->
+    <nav class="menu-nav">
+        <button class="nav-scroll-btn nav-left hidden" aria-label="Défiler vers la gauche" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="menu-nav-inner">
+            <a href="#plats" class="menu-link">Plats Principaux</a>
+            <a href="#accompagnements" class="menu-link">Accompagnements</a>
+            <a href="#legumes" class="menu-link">Légumes</a>
+            <a href="#boissons" class="menu-link">Boissons</a>
+            <a href="#alcool" class="menu-link">Vins & Alcools</a>
         </div>
+        <button class="nav-scroll-btn nav-right hidden" aria-label="Défiler vers la droite" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
     </nav>
 
     <!-- Main Content -->
@@ -785,24 +761,35 @@
 
     <!-- Footer - Flat Horizontal Design -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>📞 +32 467 620 981</p>
-                    <p>✉️ amisirosie56@gmail.com</p>
+        <div class="footer-inner">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo"><img src="/icons/logo.png" alt="Saveurs Suprême logo small"></div>
+                    <div class="footer-name">Saveurs Suprême</div>
                 </div>
-                <div class="footer-divider"></div>
-                <div class="footer-section">
-                    <h3>Horaires</h3>
-                    <p>Lundi - Dimanche</p>
-                    <p>12:30 - 23:30</p>
+                <div class="footer-col">
+                    <div class="footer-col-title">Contact</div>
+                    <a class="footer-line footer-link" href="tel:+32467620981">+32 467 620 981</a>
+                    <a class="footer-line footer-link" href="mailto:amisirosie56@gmail.com">amisirosie56@gmail.com</a>
                 </div>
-                <div class="footer-divider"></div>
-                <div class="footer-section">
-                    <h3>Adresse</h3>
-                    <p>Chaussée d'Anvers 32</p>
-                    <p>1000 Bruxelles, Belgique</p>
+                <div class="footer-col">
+                    <div class="footer-col-title">Horaires</div>
+                    <div class="footer-line">Lun - Dim</div>
+                    <div class="footer-line">12:30 - 23:30</div>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-col-title">Adresse</div>
+                    <div class="footer-line">Chaussée d'Anvers 32</div>
+                    <div class="footer-line">1000 Bruxelles</div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copy">© <span id="yearCopy"></span> Saveurs Suprême. Tous droits réservés.</div>
+                <div class="footer-meta" aria-label="Navigation pied de page">
+                    <a href="#plats">Plats</a>
+                    <a href="#accompagnements">Accompagnements</a>
+                    <a href="#legumes">Légumes</a>
+                    <a href="#boissons">Boissons</a>
                 </div>
             </div>
         </div>
@@ -821,30 +808,57 @@
             window.history.replaceState(null, '', '/');
         }
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
+        // Smooth scroll for restored navigation
+        const navLinks = document.querySelectorAll('.menu-link');
+    const navInner = document.querySelector('.menu-nav-inner');
+    const btnLeft = document.querySelector('.nav-scroll-btn.nav-left');
+    const btnRight = document.querySelector('.nav-scroll-btn.nav-right');
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
                 e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
+                const id = link.getAttribute('href');
+                const target = document.querySelector(id);
+                if (target) {
+                    const navHeight = document.querySelector('nav.menu-nav').offsetHeight;
                     const headerHeight = document.querySelector('header').offsetHeight;
-                    const navHeight = document.querySelector('nav').offsetHeight;
                     const offset = headerHeight + navHeight + 10;
-                    const targetPosition = targetSection.offsetTop - offset;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update active state
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
+                    const top = target.offsetTop - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
                 }
             });
         });
+
+        // Active section highlighting
+        const sections = document.querySelectorAll('.menu-section');
+        const makeActive = () => {
+            let current = '';
+            const scrollPos = window.scrollY + window.innerHeight * 0.25;
+            sections.forEach(sec => {
+                if (scrollPos >= sec.offsetTop) current = sec.id;
+            });
+            navLinks.forEach(l => {
+                l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+            });
+        };
+        window.addEventListener('scroll', makeActive);
+        makeActive();
+
+        // Horizontal nav scroll controls
+        function updateNavButtons(){
+            if(!navInner) return;
+            const scrollLeft = navInner.scrollLeft;
+            const maxScroll = navInner.scrollWidth - navInner.clientWidth - 2; // tolerance
+            if(scrollLeft <= 2){ btnLeft.classList.add('hidden'); } else { btnLeft.classList.remove('hidden'); }
+            if(scrollLeft >= maxScroll){ btnRight.classList.add('hidden'); } else { btnRight.classList.remove('hidden'); }
+        }
+        if(navInner && btnLeft && btnRight){
+            updateNavButtons();
+            navInner.addEventListener('scroll', () => { updateNavButtons(); });
+            window.addEventListener('resize', updateNavButtons);
+            const scrollStep = () => Math.min(200, navInner.clientWidth * 0.6);
+            btnLeft.addEventListener('click', () => { navInner.scrollBy({ left: -scrollStep(), behavior:'smooth' }); });
+            btnRight.addEventListener('click', () => { navInner.scrollBy({ left: scrollStep(), behavior:'smooth' }); });
+        }
 
         // Scroll to Top Button
         const scrollTopBtn = document.getElementById('scrollTop');
@@ -856,25 +870,6 @@
             } else {
                 scrollTopBtn.classList.remove('visible');
             }
-            
-            // Update active nav on scroll
-            const sections = document.querySelectorAll('.menu-section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (pageYOffset >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
         });
 
         // Scroll to top functionality
@@ -917,6 +912,11 @@
             }
             lastTouchEnd = now;
         }, false);
+
+    // Footer dynamic year & back to top link
+    const yearSpan = document.getElementById('yearCopy');
+    if(yearSpan){ yearSpan.textContent = new Date().getFullYear(); }
+    // Removed standalone back-to-top footer link; scroll button remains.
     </script>
 </body>
 </html>
